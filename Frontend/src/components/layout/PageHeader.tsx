@@ -20,6 +20,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
   <Box
     sx={{
       mb: 4,
+      mt: 5.5,
       borderRadius: 5,
       overflow: 'hidden',
       boxShadow: '0 8px 32px 0 rgba(31, 41, 55, 0.10)',

@@ -5,7 +5,8 @@ const quizController = {
     // Get all quizzes
     getAllQuizzes: async (req, res) => {
         try {
-            const quizzes = await quizService.getAllQuizzes();
+            const filters = req.query;
+            const quizzes = await quizService.getAllQuizzes(filters);
             res.json(quizzes);
         } catch (error) {
             res.status(500).json({ message: error.message });
@@ -58,16 +59,6 @@ const quizController = {
             res.json({ message: 'Quiz deleted successfully' });
         } catch (error) {
             res.status(500).json({ message: error.message });
-        }
-    },
-
-    // Submit quiz attempt
-    submitQuiz: async (req, res) => {
-        try {
-            const result = await quizService.submitQuiz(req.params.id, req.body);
-            res.json(result);
-        } catch (error) {
-            res.status(400).json({ message: error.message });
         }
     }
 };

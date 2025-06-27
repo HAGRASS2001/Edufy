@@ -12,10 +12,10 @@ const QuizSchema = new mongoose.Schema({
   studentMarks: { type: Number, required: true },
   difficulty: { type: String, enum: ['easy', 'medium', 'hard'], default: 'medium' },
   category: { type: String, enum: ['assignment', 'practice', 'midterm', 'final'], default: 'assignment' },
-  isPublished: { type: Boolean, default: false },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
-  tags: [{ type: String }]
+  tags: [{ type: String }],
+  assignedStudents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 }, {
   timestamps: true
 });

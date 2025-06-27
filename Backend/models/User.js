@@ -29,8 +29,7 @@ const userSchema = new mongoose.Schema({
   courses: [{ type: String }],
   semester: { type: String, required: true },
   studentId: { 
-    type: String, 
-    unique: true
+    type: String
   },
   phoneNumber: { 
     type: String

@@ -1,13 +1,39 @@
 import React, { useState } from 'react';
-import { Box, Paper, Typography, TextField, Button, InputAdornment, IconButton, Checkbox, FormControlLabel } from '@mui/material';
+import { Box, Paper, Typography, TextField, Button, InputAdornment, IconButton, Checkbox, FormControlLabel, Alert } from '@mui/material';
 import { Visibility, VisibilityOff, Email, Lock } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
+import { loginApi } from '../services/api';
+import { useAppDispatch } from '../store/store';
+import { setUser, setToken } from '../store/authSlice';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+    try {
+      const data = await loginApi(username, password);
+      dispatch(setUser(data.user));
+      dispatch(setToken(data.accessToken));
+      localStorage.setItem('token', data.accessToken);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      navigate('/dashboard');
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Login failed');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="login-bg login-bg-light">
@@ -27,21 +53,27 @@ const Login = () => {
         </Box>
         <Box className="login-form-col">
           <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="university logo" style={{ width: 54, height: 54, marginBottom: 8 }} />
+            {/* Book icon SVG as logo */}
+            <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginBottom: 8 }}>
+              <rect x="6" y="12" width="42" height="30" rx="6" fill="#2563eb"/>
+              <rect x="12" y="18" width="30" height="18" rx="3" fill="#fff"/>
+              <rect x="18" y="24" width="18" height="6" rx="1.5" fill="#2563eb"/>
+            </svg>
             <Typography variant="h6" fontWeight={700} color="#1f2937">
-              UNIVERSITY NAME
+              Edufy
             </Typography>
             <Typography variant="subtitle2" fontWeight={600} color="#2563eb" mb={2}>
               STUDENT PANEL
             </Typography>
           </Box>
-          <Box component="form" sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 2 }} autoComplete="off">
+          {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+          <form onSubmit={handleSubmit}>
             <TextField
-              label="Enrollment number"
+              label="Username"
               variant="standard"
               fullWidth
-              value={email}
-              onChange={e => setEmail(e.target.value)}
+              value={username}
+              onChange={e => setUsername(e.target.value)}
               autoFocus
               InputProps={{
                 startAdornment: (
@@ -50,6 +82,7 @@ const Login = () => {
                   </InputAdornment>
                 ),
               }}
+              sx={{ mb: 2 }}
             />
             <TextField
               label="Password"
@@ -103,9 +136,66 @@ const Login = () => {
               }}
               fullWidth
               type="submit"
+              disabled={loading}
             >
-              Sign in
+              {loading ? 'Logging in...' : 'Sign in'}
             </Button>
+          </form>
+          <Button
+            variant="outlined"
+            color="secondary"
+            sx={{ mt: 2, fontWeight: 700, borderRadius: 1.5, textTransform: 'none' }}
+            fullWidth
+            onClick={async () => {
+              setError(null);
+              setLoading(true);
+              try {
+                const data = await loginApi('IUA', 'IUA');
+                dispatch(setUser(data.user));
+                dispatch(setToken(data.accessToken));
+                localStorage.setItem('token', data.accessToken);
+                localStorage.setItem('user', JSON.stringify(data.user));
+                navigate('/dashboard');
+              } catch (err: any) {
+                setError(err.response?.data?.message || 'Bypass login failed');
+              } finally {
+                setLoading(false);
+              }
+            }}
+          >
+            Bypass Login
+          </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            sx={{ mt: 1, fontWeight: 700, borderRadius: 1.5, textTransform: 'none' }}
+            fullWidth
+            onClick={async () => {
+              setError(null);
+              setLoading(true);
+              try {
+                const data = await loginApi('student', 'student');
+                dispatch(setUser(data.user));
+                dispatch(setToken(data.accessToken));
+                localStorage.setItem('token', data.accessToken);
+                localStorage.setItem('user', JSON.stringify(data.user));
+                navigate('/dashboard');
+              } catch (err: any) {
+                setError(err.response?.data?.message || 'Student login failed');
+              } finally {
+                setLoading(false);
+              }
+            }}
+          >
+            Student Login
+          </Button>
+          <Box mt={2} textAlign="center">
+            <Typography variant="body2">
+              Don&apos;t have an account?{' '}
+              <Button variant="text" sx={{ color: '#2563eb', fontWeight: 600, textTransform: 'none', p: 0, minWidth: 0 }} onClick={() => navigate('/signup')}>
+                Sign up
+              </Button>
+            </Typography>
           </Box>
         </Box>
       </Paper>

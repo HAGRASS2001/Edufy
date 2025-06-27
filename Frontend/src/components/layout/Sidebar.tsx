@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Dashboard, 
   Quiz,
@@ -8,6 +8,8 @@ import {
   Logout
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
+import { logout } from '../../services/api';
+import { useAppSelector } from '../../store/store';
 
 // Styled components for modern design
 const StyledSidebar = styled(Sidebar)(({ theme }) => ({
@@ -132,12 +134,31 @@ const LogoutButton = styled('button')({
 
 function SidebarComponent() {
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
+
+  // Get user from Redux store
+  const reduxUser = useAppSelector(state => state.auth.user);
+  let user = reduxUser;
+  if (!user) {
+    try {
+      user = JSON.parse(localStorage.getItem('user') || '{}');
+    } catch {
+      user = {};
+    }
+  }
+  const userName = user.name || user.username || 'User';
+  const userMajor = user.major || user.role || user.courses?.[0] || '';
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <StyledSidebar collapsed={collapsed}>
       <SidebarHeader>
         <Logo>🎓 Edufy</Logo>
-        <Subtitle>Learning Management System</Subtitle>
+        <Subtitle>University Quizzes & Announcements</Subtitle>
       </SidebarHeader>
       
       <Menu>
@@ -170,14 +191,14 @@ function SidebarComponent() {
           background: 'rgba(239, 68, 68, 0.03)',
         }}>
           <UserInfo>
-            <UserAvatar>JS</UserAvatar>
+            <UserAvatar>{userName ? userName[0].toUpperCase() : 'U'}</UserAvatar>
             <div>
-              <div style={{ fontSize: '15px', fontWeight: '600', marginBottom: '2px' }}>John Student</div>
-              <div style={{ fontSize: '12px', opacity: 0.8, fontWeight: '400' }}>Computer Science</div>
+              <div style={{ fontSize: '15px', fontWeight: '600', marginBottom: '2px' }}>{userName}</div>
+              <div style={{ fontSize: '12px', opacity: 0.8, fontWeight: '400' }}>{userMajor}</div>
             </div>
           </UserInfo>
           <div style={{ padding: '0 12px' }}>
-            <LogoutButton onClick={() => console.log('Logout clicked')}>
+            <LogoutButton onClick={handleLogout}>
               <Logout style={{ fontSize: '18px' }} />
               Logout
             </LogoutButton>

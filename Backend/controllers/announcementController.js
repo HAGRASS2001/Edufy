@@ -6,7 +6,6 @@ const announcementController = {
     getAllAnnouncements: async (req, res) => {
         try {
             const announcements = await announcementService.getAllAnnouncements();
-            console.log(announcements);
             res.json(announcements);
         } catch (error) {
             res.status(500).json({ message: error.message });

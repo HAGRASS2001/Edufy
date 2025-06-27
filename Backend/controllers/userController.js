@@ -59,7 +59,19 @@ const userController = {
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
-    }
+    },
+
+    // Login user
+    login: async (req, res) => {
+        try {
+            const { username, password } = req.body;
+            const user = await userService.authenticateUserByUsername(username, password);
+            const tokens = userService.generateTokens(user);
+            res.json({ user, ...tokens });
+        } catch (error) {
+            res.status(401).json({ message: error.message });
+        }
+    },
 };
 
 module.exports = userController;
