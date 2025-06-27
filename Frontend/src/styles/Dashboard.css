@@ -1,0 +1,22 @@
+.dashboard-sections {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.dashboard-section-card {
+  flex: 1 1 0;
+  min-width: 0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(30,60,114,0.08);
+  padding: 24px 20px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .dashboard-sections {
+    flex-direction: column;
+    gap: 16px;
+  }
+} 
