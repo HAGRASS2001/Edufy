@@ -85,7 +85,7 @@ const Quizzes = () => {
   }
   const userRole = user?.role;
 
-  // Extract unique values for filters
+ 
   const courseOptions = Array.from(new Set((quizzes || []).map(q => q.course)));
   const semesterOptions = Array.from(new Set((quizzes || []).map(q => q.semester)));
   const instructorOptions = Array.from(new Set((quizzes || []).map(q => q.instructor)));
@@ -101,24 +101,24 @@ const Quizzes = () => {
       } else {
         data = await quizService.getQuizzes();
       }
-      // Handle both array and object response formats
+      
       const quizzesArray = Array.isArray(data) ? data : (data.quizzes || []);
       setQuizzes(quizzesArray);
     } catch (err) {
       setError('Failed to fetch quizzes');
       console.error('Error fetching quizzes:', err);
-      setQuizzes([]); // Set empty array on error
+      setQuizzes([]); 
     } finally {
       setLoading(false);
     }
   };
 
-  // Fetch quizzes on component mount only
+
   useEffect(() => {
     fetchQuizzes();
   }, [userRole, user?._id]);
 
-  // Filtering logic (client-side for pagination)
+  // Filtering logic 
   const filteredQuizzes = (quizzes || []).filter(q => {
     const matchesDifficulty = !difficultyFilter || q.difficulty === difficultyFilter;
     const matchesCategory = !categoryFilter || q.category === categoryFilter;
@@ -167,7 +167,7 @@ const Quizzes = () => {
       const quiz = await quizService.createQuiz(formData);
       setAddOpen(false);
       setCreationSuccess(true);
-      fetchQuizzes(); // Refresh the list
+      fetchQuizzes();
       return quiz;
     } catch (err) {
       setError('Failed to create quiz');
@@ -185,7 +185,7 @@ const Quizzes = () => {
       setDeleteDialogOpen(false);
       setQuizToDelete(null);
       setDeleteSuccess(true);
-      fetchQuizzes(); // Refresh the list
+      fetchQuizzes();
     } catch (err) {
       setError('Failed to delete quiz');
       console.error('Error deleting quiz:', err);
@@ -248,7 +248,7 @@ const Quizzes = () => {
         </Alert>
       )}
 
-      {/* Add Quiz + View Switch */}
+
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
         {userRole !== 'student' && (
           <Button

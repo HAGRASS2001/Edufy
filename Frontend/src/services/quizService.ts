@@ -13,12 +13,6 @@ export const quizService = {
     return Array.isArray(response.data) ? response.data : response.data.quizzes;
   },
 
-  // Get single quiz by ID
-  getQuiz: async (id: string) => {
-    const response = await api.get<Quiz>(`/quizzes/${id}`);
-    return response.data;
-  },
-
   // Create new quiz
   createQuiz: async (data: CreateQuizRequest) => {
     const response = await api.post<Quiz>('/quizzes', data);

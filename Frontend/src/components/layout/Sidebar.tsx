@@ -11,7 +11,6 @@ import { styled } from '@mui/material/styles';
 import { logout } from '../../services/api';
 import { useAppSelector } from '../../store/store';
 
-// Styled components for modern design
 const StyledSidebar = styled(Sidebar)(({ theme }) => ({
   height: '100vh',
   width: '320px',
@@ -183,7 +182,7 @@ function SidebarComponent() {
           Announcements
         </MenuItem>
 
-        {/* User section - must be inside Menu */}
+        
         <div style={{ 
           borderTop: '1px solid rgba(239, 68, 68, 0.3)', 
           marginTop: 'auto',

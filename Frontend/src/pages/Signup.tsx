@@ -64,7 +64,7 @@ const Signup = () => {
     <div className="login-bg login-bg-light">
       <Paper elevation={10} className="university-login-card two-col-card">
         <Box className="login-illustration">
-          {/* Placeholder SVG illustration */}
+      
           <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
             <ellipse cx="90" cy="90" rx="90" ry="90" fill="#e3f0fa" />
             <rect x="40" y="70" width="100" height="60" rx="8" fill="#bcdffb" />
@@ -78,7 +78,7 @@ const Signup = () => {
         </Box>
         <Box className="login-form-col">
           <Box display="flex" flexDirection="column" alignItems="center" mb={2}>
-            {/* Book icon SVG as logo */}
+         
             <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ marginBottom: 8 }}>
               <rect x="6" y="12" width="42" height="30" rx="6" fill="#2563eb"/>
               <rect x="12" y="18" width="30" height="18" rx="3" fill="#fff"/>

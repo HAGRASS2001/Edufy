@@ -12,7 +12,6 @@ import { store } from './store/store';
 import './styles/App.css';
 import MenuIcon from '@mui/icons-material/Menu';
 
-// Create a modern theme
 const theme = createTheme({
   palette: {
     primary: {
@@ -56,7 +55,7 @@ function App() {
             overflowX: 'hidden',
           }}
         >
-          {/* Hamburger menu for mobile */}
+
           {!isDesktop && location.pathname !== '/login' && location.pathname !== '/signup' && (
             <Box sx={{ position: 'fixed', top: 16, left: 16, zIndex: 1301 }}>
               <IconButton
@@ -70,7 +69,7 @@ function App() {
               </IconButton>
             </Box>
           )}
-          {/* Sidebar for desktop */}
+
           {location.pathname !== '/login' && location.pathname !== '/signup' && isDesktop && (
             <Box
               className="sidebar"
@@ -86,7 +85,7 @@ function App() {
               <Sidebar />
             </Box>
           )}
-          {/* Drawer for mobile */}
+
           {!isDesktop && location.pathname !== '/login' && location.pathname !== '/signup' && (
             <Drawer
               variant="temporary"

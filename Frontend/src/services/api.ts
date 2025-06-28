@@ -9,7 +9,7 @@ const api = axios.create({
   },
 });
 
-// Request interceptor for adding auth token
+
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -23,12 +23,12 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor for handling errors
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Handle unauthorized access
+   
       localStorage.removeItem('token');
       window.location.href = '/login';
     }
@@ -38,13 +38,13 @@ api.interceptors.response.use(
 
 export default api;
 
-// Login API call
+
 export const loginApi = async (username: string, password: string) => {
   const response = await api.post('/users/login', { username, password });
   return response.data;
 };
 
-// Signup API call
+
 export const signupApi = async (userData: {
   name: string;
   username: string;
@@ -58,7 +58,7 @@ export const signupApi = async (userData: {
   return response.data;
 };
 
-// Simple auth utilities
+
 export const isAuthenticated = () => {
   return !!localStorage.getItem('token');
 };
@@ -68,7 +68,6 @@ export const logout = () => {
   localStorage.removeItem('user');
 };
 
-// Get all users
 export const getAllUsers = async () => {
   const response = await api.get('/users');
   return response.data;

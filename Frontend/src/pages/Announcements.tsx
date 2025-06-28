@@ -100,7 +100,7 @@ const Announcements = () => {
     fetchAnnouncements();
   }, [priorityFilter, typeFilter, courseFilter, semesterFilter, search]);
 
-  // Filtering logic (client-side for pagination)
+  // Filtering logic
   const filteredAnnouncements = announcements.filter(a => {
     return (
       (!priorityFilter || a.priority === priorityFilter) &&
@@ -144,7 +144,7 @@ const Announcements = () => {
       setDeleteDialogOpen(false);
       setAnnouncementToDelete(null);
       setDeleteSuccess(true);
-      fetchAnnouncements(); // Refresh the list
+      fetchAnnouncements(); 
     } catch (err) {
       setError('Failed to delete announcement');
       console.error('Error deleting announcement:', err);
@@ -156,7 +156,7 @@ const Announcements = () => {
       await announcementService.createAnnouncement(formData);
       setAddOpen(false);
       setCreationSuccess(true);
-      fetchAnnouncements(); // Refresh the list
+      fetchAnnouncements(); 
     } catch (err) {
       setError('Failed to create announcement');
       console.error('Error creating announcement:', err);

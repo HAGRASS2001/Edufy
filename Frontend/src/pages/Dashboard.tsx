@@ -73,7 +73,7 @@ const sectionVariants = {
 
 const Dashboard = () => {
   const [search, setSearch] = useState('');
-  // Example counts for messages/notifications
+
   const [msgCount] = useState(3);
   const [notifCount] = useState(5);
   const [announcements, setAnnouncements] = useState<AnnouncementType[]>([]);
@@ -118,7 +118,7 @@ const Dashboard = () => {
       animate="visible"
     >
       <Box sx={{ p: { xs: 1, sm: 2, md: 3 } }}>
-        {/* Modern Dashboard Header */}
+        {/* Dashboard Header */}
         <motion.div variants={itemVariants}>
           <PageHeader
             title="Dashboard"
@@ -157,7 +157,7 @@ const Dashboard = () => {
           </Paper>
         </motion.div>
 
-        {/* Responsive Dashboard Sections */}
+
         <Box
           sx={{
             display: 'flex',

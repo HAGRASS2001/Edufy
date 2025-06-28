@@ -18,7 +18,6 @@ i18n.use(initReactI18next).init({
         'Dashboard': 'Dashboard',
         'Quizzes': 'Quizzes',
         'Announcements': 'Announcements',
-        // Add more keys as needed
       },
     },
   },

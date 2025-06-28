@@ -20,12 +20,6 @@ export const announcementService = {
     return response.data;
   },
 
-  // Get single announcement by ID
-  getAnnouncement: async (id: string) => {
-    const response = await api.get<Announcement>(`/announcements/${id}`);
-    return response.data;
-  },
-
   // Create new announcement
   createAnnouncement: async (data: CreateAnnouncementRequest) => {
     const response = await api.post<Announcement>('/announcements', data);
@@ -42,11 +36,5 @@ export const announcementService = {
   deleteAnnouncement: async (id: string) => {
     const response = await api.delete(`/announcements/${id}`);
     return response.data;
-  },
-
-  // Toggle announcement active status
-  toggleActive: async (id: string) => {
-    const response = await api.patch<Announcement>(`/announcements/${id}/toggle`);
-    return response.data;
-  },
+  }
 }; 
